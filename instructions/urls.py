@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import (
     Index,
     InstructionRecordFormView,
@@ -8,11 +9,12 @@ from .views import (
     InstructionDetailView,
     InstructionUpdateView,
     InstructionDeleteView,
-    InstructionListView,
+    InstructionListView, SearchResultView,
 )
 
 urlpatterns = [
-    path("", Index.as_view()),
+    path("", Index.as_view(), name="main_page"),
+    path("search", SearchResultView.as_view(), name="search_results"),
     path("new_instruction", InstructionRecordFormView.as_view()),
     path("entry_success", FormSuccessView.as_view()),
     path("delete_success", DeleteSuccessView.as_view()),
@@ -22,7 +24,7 @@ urlpatterns = [
         InstructionDetailView.as_view(),
         name="instruction_detail",
     ),
-    path("update/<int:pk>/", InstructionUpdateView.as_view()),
-    path("delete/<int:pk>/", InstructionDeleteView.as_view()),
+    path("update/<int:pk>/", InstructionUpdateView.as_view(), name="edit_page"),
+    path("delete/<int:pk>/", InstructionDeleteView.as_view(), name="delete_page"),
     path("list", InstructionListView.as_view()),
 ]

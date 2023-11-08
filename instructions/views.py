@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
-from .models import Instruction
+
 from .forms import InstructionForm
+from .models import Instruction
 
 
 # Create your views here.
@@ -12,26 +13,36 @@ from .forms import InstructionForm
 
 class Index(View):
     def get(self, request):
-        return render(request, template_name="instructions/index.html")
+        return render(request, template_name="index.html")
+
+
+class SearchResultView(ListView):
+    model = Instruction
+    paginate_by = 10
+    template_name = "search/search_results.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Instruction.objects.filter(title__icontains=query)
+        return object_list
 
 
 class InstructionListView(ListView):
     model = Instruction
     template_name = "instructions/instructions_list.html"
-    success_url = "/instructions/delete_success"
 
 
 class InstructionDeleteView(DeleteView):
     model = Instruction
     template_name = "instructions/instruction_delete.html"
-    success_url = "/instructions/delete_success"
+    success_url = "/instructions"
 
 
 class InstructionUpdateView(UpdateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
-    success_url = "/instructions/entry_success"
+    success_url = "/instructions"
 
 
 class InstructionDetailView(DetailView):
@@ -43,7 +54,7 @@ class InstructionCreateView(CreateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
-    success_url = "/instructions/entry_success"
+    success_url = "/instructions"
 
 
 class InstructionRecordFormView(FormView):

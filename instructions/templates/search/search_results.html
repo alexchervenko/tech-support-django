@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="align-middle">
+    {% if object_list %}
+        <ol>
+            {% for instruction in object_list %}
+                <li><a href={% url "instruction_detail" instruction.pk %}>{{ instruction.title }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+        {% else %}
+            <p>No data</p>
+    {% endif %}
+    </div>
+{% endblock %}

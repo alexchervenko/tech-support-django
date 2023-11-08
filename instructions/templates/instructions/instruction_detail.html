@@ -1,22 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container">
-
-    <div class="row height d-flex justify-content-center align-items-center">
-
-        <div class="col-md-6">
-
-            <div class="panel panel-default .align-items-center">
+            <div>
                 <h2>{{ object.title }}</h2>
                 <p>
                 <h5>Описание:</h5>
                 <p class="description">{{ object.description }}</p>
             </div>
             <div class="buttons">
-                <a href="/problems" class="btn btn-outline-primary" role="button" aria-pressed="true">На главную</a>
-                <a sec:authorize="hasAnyRole('EDITOR', 'ADMIN')" th:href="@{/problems/{id}/edit(id=${problem.getId()})}" class="btn btn-outline-secondary" role="button" aria-pressed="true">Редактировать</a>
+                <a  class="btn btn-outline-primary" role="button" aria-pressed="true" href={% url "main_page" %}>На главную</a>
+                {% if not request.user.is_authenticated %}
+                    <a  class="btn btn-outline-secondary" role="button" aria-pressed="true" href={% url "edit_page" object.pk %}>Редактировать</a>
+                {% endif %}
             </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
