@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="align-middle">
-    {% if object_list %}
-        <ol>
-            {% for instruction in object_list %}
-                <li><a href={% url "instruction_detail" instruction.pk %}>{{ instruction.title }}</a>
-                </li>
-            {% endfor %}
-        </ol>
+        {% if object_list %}
+            <ol>
+                {% for instruction in object_list %}
+                    <li><a href={% url "instruction_detail" instruction.pk %}>{{ instruction.title }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
         {% else %}
             <p>No data</p>
-    {% endif %}
+        {% endif %}
+        {% for page_number in paginator.get_elided_page_range %}
+            <a href="/instructions/search?q={{ q }}&page={{ page_number }}">{{ page_number }}</a>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -1,18 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Instruction Book</title>
-</head>
-<body>
-    <p>Delete Instruction Record</p>
+{% extends "base.html" %}
+{% block content %}
     <form method="POST">
         {% csrf_token %}
-        Do you want to delete the Instruction?
-        <input type="submit" value="Delete Instruction"/>
+        <h4>Удалить карточку?</h4>
+        <br>
+        <div class="w-100">
+        <input class="btn btn-outline-danger w-25" type="submit" value="Да"/>
+        <a class="btn btn-outline-secondary w-25" role="button" aria-pressed="true" href={% url "edit_page" object.pk%}>Нет</a>
+        </div>
     </form>
-</body>
-</html>
+{% endblock %}

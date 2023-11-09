@@ -18,7 +18,7 @@ class Index(View):
 
 class SearchResultView(ListView):
     model = Instruction
-    paginate_by = 10
+    paginate_by = 3
     template_name = "search/search_results.html"
 
     def get_queryset(self):
