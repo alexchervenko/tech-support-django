@@ -23,22 +23,11 @@ class SearchResultView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        object_list = Instruction.objects.filter(title__icontains=query)
+        object_list = Instruction.objects.filter(title__icontains=query).order_by("-id")
         return object_list
 
 
-class InstructionListView(ListView):
-    model = Instruction
-    template_name = "instructions/instructions_list.html"
-
-
-class InstructionDeleteView(DeleteView):
-    model = Instruction
-    template_name = "instructions/instruction_delete.html"
-    success_url = "/instructions"
-
-
-class InstructionUpdateView(UpdateView):
+class InstructionCreateView(CreateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
@@ -50,28 +39,14 @@ class InstructionDetailView(DetailView):
     template_name = "instructions/instruction_detail.html"
 
 
-class InstructionCreateView(CreateView):
+class InstructionUpdateView(UpdateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
     success_url = "/instructions"
 
 
-class InstructionRecordFormView(FormView):
-    template_name = "instruction_form.html"
-    form_class = InstructionForm
-    success_url = "/instructions/entry_success"
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-
-class FormSuccessView(View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse("Instruction saved successfully")
-
-
-class DeleteSuccessView(View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse("Instruction deleted successfully")
+class InstructionDeleteView(DeleteView):
+    model = Instruction
+    template_name = "instructions/instruction_delete.html"
+    success_url = "/instructions"

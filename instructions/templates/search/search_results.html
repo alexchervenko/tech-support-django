@@ -2,17 +2,22 @@
 {% block content %}
     <div class="align-middle">
         {% if object_list %}
-            <ol>
+            <ul class="list-group">
                 {% for instruction in object_list %}
-                    <li><a href={% url "instruction_detail" instruction.pk %}>{{ instruction.title }}</a>
-                    </li>
+                    <li class="list-group-item"><a href={% url "instruction_detail" instruction.pk %}>{{ instruction.title }}</a>
                 {% endfor %}
-            </ol>
+            </ul>
         {% else %}
             <p>No data</p>
         {% endif %}
-        {% for page_number in paginator.get_elided_page_range %}
-            <a href="/instructions/search?q={{ q }}&page={{ page_number }}">{{ page_number }}</a>
-        {% endfor %}
+        <br>
+        <p>{{Paginator.get_page}}</p>
+        <nav aria-label="...">
+            <ul class="pagination pagination-lg">
+              {% for page_number in paginator.get_elided_page_range %}
+                <li class="page-item"> <a class="page-link" href="/instructions/search?q={{ q }}&page={{ page_number }}">{{ page_number }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
     </div>
 {% endblock %}
