@@ -16,22 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin, auth
 from django.urls import path, include
-
-# from instructions.views import Index
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include(("django.contrib.auth.urls", "auth"), namespace="accounts")),
-    path("", auth.views.LoginView.as_view()),
-    path(
-        "accounts/password_reset/done/",
-        auth.views.PasswordResetDoneView.as_view(),
-        name="password_reset_done",
-    ),
-    path(
-        "accounts/reset/done/",
-        auth.views.PasswordResetCompleteView.as_view(),
-        name="password_reset_complete",
-    ),
     path("instructions/", include("instructions.urls")),
+    path("accounts/", include("accounts.urls")),
+    path("", RedirectView.as_view(pattern_name="main_page", permanent=False)),
 ]

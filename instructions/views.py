@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
@@ -11,14 +12,14 @@ from .models import Instruction
 # Create your views here.
 
 
-class Index(View):
+class Index(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, template_name="index.html")
 
 
-class SearchResultView(ListView):
+class SearchResultView(LoginRequiredMixin, ListView):
     model = Instruction
-    paginate_by = 3
+    paginate_by = 10
     template_name = "search/search_results.html"
 
     def get_queryset(self):
@@ -27,26 +28,26 @@ class SearchResultView(ListView):
         return object_list
 
 
-class InstructionCreateView(CreateView):
+class InstructionCreateView(LoginRequiredMixin, CreateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
     success_url = "/instructions"
 
 
-class InstructionDetailView(DetailView):
+class InstructionDetailView(LoginRequiredMixin, DetailView):
     model = Instruction
     template_name = "instructions/instruction_detail.html"
 
 
-class InstructionUpdateView(UpdateView):
+class InstructionUpdateView(LoginRequiredMixin, UpdateView):
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
     success_url = "/instructions"
 
 
-class InstructionDeleteView(DeleteView):
+class InstructionDeleteView(LoginRequiredMixin, DeleteView):
     model = Instruction
     template_name = "instructions/instruction_delete.html"
     success_url = "/instructions"

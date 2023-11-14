@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block content %}
+    {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">
+            {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+        </p>
+    {% endif %}
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}<p class="errornote">{{ error }}</p>{% endfor %}
+    {% endif %}
+    <div id="content-main">
+        {% if user.is_authenticated %}
+            <p class="errornote">
+                {% blocktranslate trimmed %}
+                    You are authenticated as {{ username }}, but are not authorized to
+                    access this page. Would you like to login to a different account?
+                {% endblocktranslate %}
+            </p>
+        {% endif %}
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <h3>Регистрация</h3>
+            <br>
+            <div class="mb-3">
+                {{ form.username.errors }}
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Логин"
+                       id="loginLabel">
+            </div>
+            <div class="mb-3">
+                {{ form.password1.errors }}
+                <input type="password"
+                       name="password1"
+                       class="form-control"
+                       placeholder="Пароль"
+                       id="passLabel">
+            </div>
+            <div class="mb-3">
+                {{ form.password2.errors }}
+                <input type="password"
+                       name="password2"
+                       class="form-control"
+                       placeholder="Повтор пароля"
+                       id="passLabel">
+            </div>
+            <button type="submit" class="btn btn-primary">Регистрация</button>
+            <a class="btn btn-outline-primary" href="{% url 'login' %}">Назад</a>
+        </form>
+    </div>
+{% endblock %}

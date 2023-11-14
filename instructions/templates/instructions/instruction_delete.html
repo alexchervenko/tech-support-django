@@ -5,8 +5,11 @@
         <h4>Удалить карточку?</h4>
         <br>
         <div class="w-100">
-        <input class="btn btn-outline-danger w-25" type="submit" value="Да"/>
-        <a class="btn btn-outline-secondary w-25" role="button" aria-pressed="true" href={% url "edit_page" object.pk%}>Нет</a>
+            <input class="btn btn-outline-danger w-25" type="submit" value="Да" />
+            <a class="btn btn-outline-secondary w-25"
+               role="button"
+               aria-pressed="true"
+               href="{% url "edit_page" object.pk %}">Нет</a>
         </div>
     </form>
 {% endblock %}

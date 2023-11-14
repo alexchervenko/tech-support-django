@@ -1,16 +1,20 @@
 {% extends "base.html" %}
-{% block title %} {{ object.title }} {% endblock %}
+{% block title %}{{ object.title }}{% endblock %}
 {% block content %}
     <div class="mw-100">
         <h2>{{ object.title }}</h2>
         <p>
-        <h5>Описание:</h5>
-        <p class="description" style="white-space: pre-wrap">{{ object.description }}</p>
-
-        <a class="btn btn-outline-primary" role="button" aria-pressed="true" href={% url "main_page" %}>На главную</a>
-        {% if not request.user.is_authenticated %}
-            <a class="btn btn-outline-secondary" role="button" aria-pressed="true" href={% url "edit_page" object.pk %}>Редактировать</a>
-        {% endif %}
-    </div>
-
-{% endblock %}
+            <h5>Описание:</h5>
+            <p class="description" style="white-space: pre-wrap">{{ object.description }}</p>
+            <a class="btn btn-outline-primary"
+               role="button"
+               aria-pressed="true"
+               href="{% url "main_page" %}">На главную</a>
+            {% if request.user.is_authenticated %}
+                <a class="btn btn-outline-secondary"
+                   role="button"
+                   aria-pressed="true"
+                   href="{% url "edit_page" object.pk %}">Редактировать</a>
+            {% endif %}
+        </div>
+    {% endblock %}

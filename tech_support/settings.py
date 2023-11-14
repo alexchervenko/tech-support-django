@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "bootstrap5",
     "instructions",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -130,5 +131,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Login URL
-LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/instructions/"
+LOGIN_URL = "/accounts/login"
+LOGIN_REDIRECT_URL = "/instructions"
+
+# Logout URL
+LOGOUT_REDIRECT_URL = LOGIN_URL

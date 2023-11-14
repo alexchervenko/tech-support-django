@@ -2,16 +2,28 @@
 {% block content %}
     <div class="form">
         <form method="GET" action={% url "search_results" %}>
+            {% csrf_token %}
             <div class="input-group">
-                <input type="search" class="form-control rounded" name="q" placeholder="Опишите проблему..."
-                       aria-label="Search" aria-describedby="search-addon"/>
+                <input type="search"
+                       class="form-control rounded"
+                       name="q"
+                       placeholder="Опишите проблему..."
+                       aria-label="Search"
+                       aria-describedby="search-addon" />
                 <button type="submit" class="btn btn-outline-primary">Искать</button>
             </div>
         </form>
     </div>
-
-    <div class="button-new" style="margin-top: 20px">
-        <a href="/instructions/create" class="btn btn-primary" role="button" aria-pressed="true">Добавить</a>
+    <br>
+    <div class="button-new">
+        <a href="/instructions/create"
+           class="btn btn-primary"
+           role="button"
+           aria-pressed="true">Добавить</a>
     </div>
-
+    <br>
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <input class="btn btn-outline-dark" type="submit" value="Выход">
+    </form>
 {% endblock %}

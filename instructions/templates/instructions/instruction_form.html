@@ -3,11 +3,18 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        {% bootstrap_form form%}
+        {% bootstrap_form form %}
         <input class="btn btn-outline-success" type="submit" value="Сохранить">
-        {% if object %}
-            <a class="btn btn-outline-danger" role="button" aria-pressed="true" href={% url "delete_page" object.pk %}>Удалить</a>
+        {% if object and request.user.is_staff %}
+            <a class="btn btn-outline-danger"
+               role="button"
+               aria-pressed="true"
+               href="{% url "delete_page" object.pk %}">Удалить</a>
         {% endif %}
-        <a class="btn btn-outline-secondary w-auto ml-2 " style="float: right" role="button" aria-pressed="true" href={% url "main_page" %}>На главную</a>
+        <a class="btn btn-outline-secondary w-auto ml-2 "
+           style="float: right"
+           role="button"
+           aria-pressed="true"
+           href="{% url "main_page" %}">На главную</a>
     </form>
 {% endblock %}
