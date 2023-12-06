@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
@@ -40,14 +40,16 @@ class InstructionDetailView(LoginRequiredMixin, DetailView):
     template_name = "instructions/instruction_detail.html"
 
 
-class InstructionUpdateView(LoginRequiredMixin, UpdateView):
+class InstructionUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = "instructions.change_instruction"
     model = Instruction
     fields = ["title", "description"]
     template_name = "instructions/instruction_form.html"
     success_url = "/instructions"
 
 
-class InstructionDeleteView(LoginRequiredMixin, DeleteView):
+class InstructionDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = "instructions.delete_instruction"
     model = Instruction
     template_name = "instructions/instruction_delete.html"
     success_url = "/instructions"

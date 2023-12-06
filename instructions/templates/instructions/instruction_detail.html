@@ -10,7 +10,7 @@
                role="button"
                aria-pressed="true"
                href="{% url "main_page" %}">На главную</a>
-            {% if request.user.is_authenticated %}
+            {% if perms.instructions.change_instruction %}
                 <a class="btn btn-outline-secondary"
                    role="button"
                    aria-pressed="true"
